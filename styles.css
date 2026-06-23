@@ -52,6 +52,14 @@ body {
   max-width: 420px;
   margin-bottom: 2rem;
 }
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffd60a;
+  margin-bottom: 0.75rem;
+}
 
 .education{
     display: flex; 
@@ -60,6 +68,11 @@ body {
     font-size: 0.9rem ; 
     color: #e0d4f7; 
     margin: 1.5rem 0;
+}
+.education-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 .education-text {
   display: flex;
