@@ -6,8 +6,8 @@
 }
 
 body {
-  background-color: #0d0d0d;
-  color: #e8e8e8;
+  background-color: #5b0eb0;
+  color: #f5f0ff;;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.5;
 }
@@ -42,13 +42,13 @@ body {
   font-weight: 600;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: #7fb3d5;
+  color: #ffd60a;
   margin-bottom: 1.5rem;
 }
 
 .bio {
   font-size: 1rem;
-  color: #b5b5b5;
+  color: #e0d4f7;
   max-width: 420px;
   margin-bottom: 2rem;
 }
@@ -56,9 +56,9 @@ body {
 .cv-button {
   display: inline-block;
   padding: 0.75rem 1.75rem;
-  border: 1px solid #e8e8e8;
+  border: 1px solid #ffd60a;
   border-radius: 30px;
-  color: #e8e8e8;
+  color: #ffd60a;
   text-decoration: none;
   font-size: 0.9rem;
   letter-spacing: 1px;
@@ -66,8 +66,8 @@ body {
 }
 
 .cv-button:hover {
-  background-color: #e8e8e8;
-  color: #0d0d0d;
+  background-color:#ffd60a;
+  color: #2d0a5c;
 }
 
 /* ---------- Hero photo ---------- */
@@ -82,7 +82,7 @@ body {
   height: min(320px, 80vw);
   border-radius: 50%;
   object-fit: cover;
-  filter: grayscale(10%);
+  filter: none;
 }
 
 /* ---------- Projects section ---------- */
@@ -104,8 +104,8 @@ body {
 }
 
 .project-card {
-  background-color: #1a1a1a;
-  border: 1px solid #2a2a2a;
+  background-color: #3d0a85;
+  border: 1px solid #6b2fc9;
   border-radius: 10px;
   padding: 1.5rem;
   transition: transform 0.2s ease, border-color 0.2s ease;
@@ -113,7 +113,7 @@ body {
 
 .project-card:hover {
   transform: translateY(-4px);
-  border-color: #7fb3d5;
+  border-color: #ffd60a;
 }
 
 .project-card h3 {
@@ -128,7 +128,7 @@ body {
 }
 
 .project-card a {
-  color: #7fb3d5;
+  color: #ffd60a;
   text-decoration: none;
   font-size: 0.9rem;
 }
