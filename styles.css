@@ -5,11 +5,29 @@
   box-sizing: border-box;
 }
 
+:root {
+  /* Tonal purple scale — background, card, modal each one step deeper for real depth */
+  --purple-bg: #4a0c95;
+  --purple-card: #3d0a85;
+  --purple-card-hover: #46109a;
+  --purple-modal: #2d0768;
+  --purple-border: #6b2fc9;
+  --gold: #ffd60a;
+  --text-primary: #ffffff;
+  --text-secondary: #e0d4f7;
+  --text-muted: #c9b8e8;
+}
+
+
 body {
-  background-color: #5b0eb0;
-  color: #f5f0ff;;
+  background-color: var(--purple-bg);
+  color: var(--text-secondary);
   font-family: 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.5;
+}
+
+body.modal-locked {
+  overflow: hidden;
 }
 
 /* ---------- Hero section (two-column) ---------- */
@@ -42,7 +60,7 @@ body {
   font-weight: 600;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: #ffd60a;
+  color:  #ffd60a;
   margin-bottom: 1.5rem;
 }
 
@@ -63,8 +81,8 @@ body {
 
 .education{
     display: flex; 
-    align-items: center; 
-    gap:1rem; 
+    flex-direction: column;
+    gap: 0.5rem; 
     font-size: 0.9rem ; 
     color: #e0d4f7; 
     margin: 1.5rem 0;
@@ -132,11 +150,22 @@ body {
   padding: 5vw;
 }
 
-.projects h2 {
+.section-label-lg {
   font-size: 2rem;
   margin-bottom: 2rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+  color: var(--text-primary);
+}
+
+.projects-engineering {
+  border-top: 1px solid var(--purple-border);
+  padding-top: 4vw;
+}
+
+.projects-engineering .section-label-lg {
+  color: var(--text-muted);
+  font-size: 1.5rem;
 }
 
 .project-grid {
@@ -147,15 +176,21 @@ body {
 
 .project-card {
   display: block;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
   text-decoration: none;
   color: inherit;
-  background-color: #3d0a85;
-  border: 1px solid #6b2fc9;
-  border-radius: 18px;
-  padding: 2rem;
+  background-color: var(--purple-card);
+  border: 1px solid var(--purple-border);
+  border-radius: 20px;
+  padding: 0;
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.2s ease;
+  transition: opacity 0.6s ease, transform 0.6s ease,
+              border-color 0.2s ease, background-color 0.2s ease,
+              box-shadow 0.2s ease;
 }
 
 .project-card.visible {
@@ -163,29 +198,215 @@ body {
   transform: translateY(0);
 }
 
+.project-card-inner {
+  padding: 2rem;
+}
+
 .project-card:hover {
-  border-color: #ffd60a;
+  border-color: var(--gold);
+  background-color: var(--purple-card-hover);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  transform: translateY(-4px);
+}
+
+.project-card:active {
+  transform: scale(0.97) translateY(-2px);
+  transition: transform 0.1s ease;
+}
+
+.project-card:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.project-metric {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--purple-modal);
+  background-color: var(--gold);
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
 }
 
 .project-card h3 {
   font-size: 1.15rem;
   margin-bottom: 0.75rem;
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 .project-card p {
   font-size: 0.9rem;
-  color: #e0d4f7;
+  color: var(--text-secondary);
   margin-bottom: 1.25rem;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  border: 1px solid var(--purple-border);
+  border-radius: 20px;
+  padding: 0.25rem 0.7rem;
 }
 
 .project-link {
   font-size: 0.85rem;
-  color: #ffd60a;
+  color: var(--gold);
   font-weight: 600;
 }
 
+/* ---------- Modal ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(13, 2, 31, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vh 4vw;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-card {
+  background-color: var(--purple-modal);
+  border: 1px solid var(--purple-border);
+  border-radius: 24px;
+  max-width: 640px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  position: relative;
+  transform: translateY(20px) scale(0.98);
+  transition: transform 0.25s ease;
+}
+.modal-overlay.open .modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  transition: background-color 0.2s ease;
+}
+
+.modal-close:hover {
+  background-color: var(--gold);
+  color: var(--purple-modal);
+}
+
+.modal-image-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--purple-border);
+  border-radius: 24px 24px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+}
+
+.modal-image-placeholder span {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* When a real image is dropped in, give it: <img> instead of placeholder div content */
+.modal-image-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 24px 24px 0 0;
+}
+
+.modal-body {
+  padding: 2rem 2.25rem 2.5rem;
+}
+
+.modal-body h2 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  padding-right: 2rem;
+}
+
+.modal-subhead {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal-body p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.modal-github-button {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.75rem 1.75rem;
+  border: 1px solid var(--gold);
+  border-radius: 30px;
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.modal-github-button:hover {
+  background-color: var(--gold);
+  color: var(--purple-modal);
+}
+
 /* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 700px) {
   .hero {
     flex-direction: column-reverse;
@@ -202,8 +423,29 @@ body {
     margin-left: auto;
     margin-right: auto;
   }
-/* 
+
+  .education-row {
+    justify-content: center;
+  }
+
   .project-grid {
     grid-template-columns: 1fr;
-  } */
+  }
+
+  .modal-card {
+    max-height: 92vh;
+  }
+
+  .modal-body {
+    padding: 1.5rem 1.5rem 2rem;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .project-card,
+  .modal-overlay,
+  .modal-card {
+    transition: none;
+  }
 }
