@@ -18,7 +18,6 @@
   --text-muted: #c9b8e8;
 }
 
-
 body {
   background-color: var(--purple-bg);
   color: var(--text-secondary);
@@ -37,8 +36,9 @@ body.modal-locked {
   align-items: center;
   justify-content: space-between;
   gap: 3rem;
-  min-height: 90vh;
-  padding: 5vw;
+
+  min-height: 100vh;
+  padding: clamp(2rem,5vw, 5rem);
 }
 
 .hero-text {
@@ -60,52 +60,65 @@ body.modal-locked {
   font-weight: 600;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color:  #ffd60a;
+  color: var(--gold);
   margin-bottom: 1.5rem;
 }
 
 .bio {
   font-size: 1rem;
-  color: #e0d4f7;
+  color: var(--text-secondary);
   max-width: 420px;
   margin-bottom: 2rem;
 }
+
 .section-label {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #ffd60a;
+  color: var(--gold);
   margin-bottom: 0.75rem;
 }
 
-.education{
-    display: flex; 
-    flex-direction: column;
-    gap: 0.5rem; 
-    font-size: 0.9rem ; 
-    color: #e0d4f7; 
-    margin: 1.5rem 0;
+.section-description{
+    max-width:700px;
+    margin-bottom:2.5rem;
+    color:var(--text-muted);
+    font-size:1rem;
+    line-height:1.7;
 }
+
+
+.education {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 1.5rem 0;
+}
+
 .education-row {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
+
 .education-text {
   display: flex;
   flex-direction: column;
 }
+
 .degree-name {
-    font-size: 1rem; 
-    font-weight: 600; 
-    color: #ffffff;
-    margin-bottom: 0.15rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.15rem;
 }
 
 .degree-major {
   font-size: 0.85rem;
-  color: #c9b8e8;
+  color: var(--text-muted);
 }
 
 .uni-logo {
@@ -113,12 +126,13 @@ body.modal-locked {
   height: 70px;
   object-fit: contain;
 }
+
 .cv-button {
   display: inline-block;
   padding: 0.75rem 1.75rem;
-  border: 1px solid #ffd60a;
+  border: 1px solid var(--gold);
   border-radius: 30px;
-  color: #ffd60a;
+  color: var(--gold);
   text-decoration: none;
   font-size: 0.9rem;
   letter-spacing: 1px;
@@ -126,8 +140,8 @@ body.modal-locked {
 }
 
 .cv-button:hover {
-  background-color:#ffd60a;
-  color: #2d0a5c;
+  background-color: var(--gold);
+  color: var(--purple-modal);
 }
 
 /* ---------- Hero photo ---------- */
@@ -135,21 +149,29 @@ body.modal-locked {
   flex: 1 1 300px;
   display: flex;
   justify-content: center;
+  align-items: center;
+
 }
 
 .hero-photo img {
-  width: min(320px, 80vw);
-  height: min(320px, 80vw);
+  width: clamp(220px, 35vw, 420px);
+  aspect-ratio:1;
+  height: auto;
+
   border-radius: 50%;
   object-fit: cover;
-  filter: none;
+
 }
 
 /* ---------- Projects section ---------- */
 .projects {
-  padding: 5vw;
+
+  padding:6rem 5vw;
 }
 
+.projects + .projects{
+    border-top:1px solid var(--purple-border);
+}
 .section-label-lg {
   font-size: 2rem;
   margin-bottom: 2rem;
@@ -158,6 +180,17 @@ body.modal-locked {
   color: var(--text-primary);
 }
 
+.analytics .section-label-lg{
+    color:#FFD60A;
+}
+
+.software .section-label-lg{
+    color:#7DD3FC;
+}
+
+.IT .section-label-lg{
+    color:#4ADE80;
+}
 .projects-engineering {
   border-top: 1px solid var(--purple-border);
   padding-top: 4vw;
@@ -174,6 +207,7 @@ body.modal-locked {
   gap: 1.5rem;
 }
 
+/* Cards are <button> elements now — reset native button styling */
 .project-card {
   display: block;
   width: 100%;
@@ -209,6 +243,7 @@ body.modal-locked {
   transform: translateY(-4px);
 }
 
+/* the "pop" on click/active */
 .project-card:active {
   transform: scale(0.97) translateY(-2px);
   transition: transform 0.1s ease;
@@ -299,6 +334,7 @@ body.modal-locked {
   transform: translateY(20px) scale(0.98);
   transition: transform 0.25s ease;
 }
+
 .modal-overlay.open .modal-card {
   transform: translateY(0) scale(1);
 }
@@ -407,12 +443,16 @@ body.modal-locked {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 950px) {
   .hero {
     flex-direction: column-reverse;
     text-align: center;
     min-height: auto;
     padding: 8vw 6vw;
+  }
+
+  .hero-photo {
+    margin-bottom: 2rem;
   }
 
   .hero-text {
