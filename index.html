@@ -210,7 +210,9 @@
       <button class="modal-close" aria-label="Close">&times;</button>
 
       <div class="modal-image-placeholder" data-project-image="1">
-        <span>Add image here — e.g. EEG signal plot or model accuracy graph</span>
+        <span>
+          <img src="assets/closed-loop-eeg.png" width="100" height="100">
+        </span>
       </div>
 
       <div class="modal-body">
@@ -241,10 +243,16 @@
       <button class="modal-close" aria-label="Close">&times;</button>
 
       <div class="modal-image-placeholder" data-project-image="2">
-        <span>Add image here — e.g. segmentation chart or dashboard screenshot</span>
+        <div class="slideshow">
+          <img src="assets/customer-segmentation-dashboard.png" alt="customer-seg-1" class="modal-image">
+          <img src="assets/business-overview-dashboard.png" alt="customer-seg-2" class="modal-image">
+          <button class="slide-arrow slide-prev" aria-label="Previous image">&#8249;</button>
+          <button class="slide-arrow slide-next" aria-label="Next image">&#8540;</button>
+          <div class="slide-dots"></div>
+        </div>
       </div>
       <div class="modal-body">
-        <h2 id="modal-2-title">Customer Churn &amp; Segmentation</h2>
+        <h2 id="modal-2-title">Customer Segmentation</h2>
         <div class="tag-row">
             <span class="tag">Python</span>
             <span class="tag">scikit-learn</span>
@@ -519,6 +527,33 @@
     }, { threshold: 0.15 });
 
     cards.forEach(card => revealObserver.observe(card));
+
+    document.querySelectorAll('.slideshow').forEach(slideshow => {
+      const slides = slideshow.querySelectorAll('.slide');
+      if (slides.length <= 1) return; //no arros or dots 
+
+      const dotsContainer = slideshow.querySelectorAll('.slide-dots');
+      let current = 0;
+
+      slides.forEach((_,i) => {
+        const dot = document.createElement('button');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+      });
+
+      const dots = slideshow.querySelectorAll('.slide-dot');
+      function goTo(index) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current= (index + slides.length) % slides.length; 
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+
+      slideshow.querySelector('.slide-prev').addEventListener('click', () => goTo(current -1));
+      slideshow.querySelector('.slide-next').addEventListener('click', () => goTo(current + 1));
+    })
   </script>
 
 </body>

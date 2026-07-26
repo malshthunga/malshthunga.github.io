@@ -436,7 +436,53 @@ body.modal-locked {
   color: var(--purple-modal);
 }
 
-/* ---------- Responsive ---------- */
+.slideshow { position: relative; width: 100%; }
+
+.slide {
+  display:none; 
+  width: 100%; 
+  border-radius: 8px;
+}
+
+.slide.active { display: block; }
+
+.slide-arrow{
+  position:absolute; 
+  top:50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  border:none; 
+  font-size:28px; 
+  width: 40px; 
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.slide-prev { left: 10px; }
+.slide-next { right:10px; }
+
+.slide-dots {
+  display: flex;
+  justify-content: center;
+  gap:6px;
+  margin-top: 8px;
+}
+
+.slide-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+.slide-dot.active { background: #fff; }
+  /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .project-grid {
     grid-template-columns: repeat(2, 1fr);
