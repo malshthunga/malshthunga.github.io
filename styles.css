@@ -365,8 +365,10 @@ body.modal-locked {
 }
 
 .modal-image-placeholder {
+  height: auto;
+  max-height: none;
+  overflow: visible;
   width: 100%;
-  aspect-ratio: 16 / 9;
   background-color: rgba(255, 255, 255, 0.05);
   border-bottom: 1px solid var(--purple-border);
   border-radius: 24px 24px 0 0;
@@ -541,7 +543,7 @@ body.modal-locked {
   .modal-list li:last-child {
     margin-bottom: 0;
   }
-
+}
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   .project-card,

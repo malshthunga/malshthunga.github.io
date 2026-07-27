@@ -59,8 +59,8 @@
         <button class="project-card" data-modal="modal-2" aria-haspopup="dialog">
             <div class="project-card-inner">
                 <span class="project-metric">Retention strategy</span>
-                <h3>Customer Segmentation</h3>
-                <p>Built a segmentation model to identify at-risk customers and informed retention strategy.</p>
+                <h3>Customer Segmentation &amp; Recommendations</h3>
+                <p>Data-driven Power BI dashboard highlighting key customer personas and retention strategies.</p>
                 <div class="tag-row">
                     <span class="tag">Python</span>
                     <span class="tag">scikit-learn</span>
@@ -73,13 +73,13 @@
         <!--Project3-->
         <button class="project-card" data-modal="modal-3" aria-haspopup="dialog">
             <div class="project-card-inner">
-                <span class="project-metric">[UPDATE: result]</span>
-                <h3>Churn Analysis</h3>
-                <p>Data-driven Power BI dashboard highlighting key customer personas and retention strategies.</p>
+                <span class="project-metric">27% churn rate</span>
+                <h3>Customer Churn Segmentation</h3>
+                <p>Built a Random Forest model to predict at-risk customers and inform retention strategy.</p>
                 <div class="tag-row">
+                    <span class="tag">Python</span>
+                    <span class="tag">scikit-learn</span>
                     <span class="tag">Power BI</span>
-                    <span class="tag">DAX</span>
-                    <span class="tag">Power Query</span>
                 </div>
                 <span class="project-link">View Project →</span>
             </div>
@@ -242,7 +242,7 @@
           <li>In simulation, stimulation intensity stabilised between 0.58–0.62 mA</li>
           <li>Mean error dropped ~50% within 100 cycles</li>
         </ul>
-        
+
         <a href="https://github.com/malshthunga/Closed-loop-Brain-Stimulation-Controller-Using-Machine-Learning-Sprint-2" target="_blank" class="modal-github-button">View Repository on GitHub →</a>
       </div>
     </div>
@@ -252,11 +252,10 @@
   <div class="modal-overlay" id="modal-2" role="dialog" aria-modal="true" aria-labelledby="modal-2-title">
     <div class="modal-card">
       <button class="modal-close" aria-label="Close">&times;</button>
-
       <div class="modal-image-placeholder" data-project-image="2">
         <div class="slideshow">
-          <img src="assets/customer-segmentation-dashboard.png" alt="customer-seg-1" class="modal-image slide active">
-          <img src="assets/business-overview-dashboard.png" alt="customer-seg-2" class="modal-image slide">
+          <img src="assets/customer-segmentation-dashboard.png" alt="Customer segmentation Power BI dashboard" class="modal-image slide active">
+          <img src="assets/business-overview-dashboard.png" alt="Business overview Power BI dashboard" class="modal-image slide">
           <button class="slide-arrow slide-prev" aria-label="Previous image">&#8249;</button>
           <button class="slide-arrow slide-next" aria-label="Next image">&#8250;</button>
           <div class="slide-dots"></div>
@@ -269,16 +268,27 @@
             <span class="tag">scikit-learn</span>
             <span class="tag">Power BI</span>
         </div>
-
         <h4 class="modal-subhead">Problem</h4>
-        <p>Update this with the real business problem — e.g. which customer base, what churn signal you were tasked to catch, and why it mattered to the business.</p>
+        <p>Grad Careers needed to understand which customers were driving revenue and which were at risk of churning across its six service lines, so retention efforts could be targeted rather than blanket.</p>
 
         <h4 class="modal-subhead">Approach</h4>
-        <p>Update this with your real method — e.g. which clustering or classification technique, what features you engineered, how you validated the model.</p>
-        <h4 class="modal-subhead">Result</h4>
-        <p>Update this with your real outcome — e.g. number of at-risk segments identified, retention uplift estimate, or how the business acted on it.</p>
+        <ul class="modal-list">
+          <li>Imported 1,000 orders into Power BI Desktop and transformed the data in Power Query</li>
+          <li>Applied RFM (Recency, Frequency, Monetary) methodology to classify customers into behavioural segments</li>
+          <li>Built custom DAX measures to support the segmentation logic</li>
+          <li>Designed an interactive dashboard covering revenue performance, order status, and sales agent performance</li>
+        </ul>
 
-        <a href="https://github.com/yourusername/customer-churn-segmentation" target="_blank" class="modal-github-button">View Repository on GitHub →</a>
+        <h4 class="modal-subhead">Result</h4>
+        <ul class="modal-list">
+          <li>Identified 5 distinct customer segments</li>
+          <li>Lost customers were the largest group at 26.9%</li>
+          <li>Lost + At Risk customers together made up 48.8% of the base, despite above-average spend histories — a high-value win-back opportunity</li>
+          <li>Recommended a targeted Mentoring Program re-engagement campaign</li>
+          <li>Flagged 387 orders still sitting at "Service Booked" for structured follow-up</li>
+        </ul>
+
+        <a href="https://github.com/malshthunga/Customer-Segmentation-Recommendation" target="_blank" class="modal-github-button">View Repository on GitHub →</a>
       </div>
     </div>
   </div>
@@ -297,22 +307,33 @@
         </div>
       </div>        
       <div class="modal-body">
-        <h2 id="modal-3-title">Churn</h2>
+        <h2 id="modal-3-title">Customer Churn &amp; Segmentation</h2>
         <div class="tag-row">
+            <span class="tag">Python</span>
+            <span class="tag">scikit-learn</span>
             <span class="tag">Power BI</span>
-            <span class="tag">DAX</span>
-            <span class="tag">Power Query</span>
         </div>
+
         <h4 class="modal-subhead">Problem</h4>
-        <p>[UPDATE: e.g. identify key customer personas and retention strategies from raw customer data using Power BI.]</p>
+        <p>A telecom customer base of 6,418 customers needed a way to flag at-risk customers before they churned, so retention efforts could be targeted rather than reactive.</p>
 
         <h4 class="modal-subhead">Approach</h4>
-        <p>[UPDATE: e.g. imported and cleaned the Customer Segmentation Dataset in Power Query, built DAX measures for Total Spend, Average Order Value and Recency, then designed an interactive dashboard with slicers and filters by region and customer type.]</p>
+        <ul class="modal-list">
+          <li>Cleaned and prepared the data with SQL views (null checks, filtering, churn view creation)</li>
+          <li>Built a Random Forest classification model in Python (scikit-learn) to predict churn status from customer, service and billing features</li>
+          <li>Label-encoded categorical variables and trained on an 80/20 split</li>
+          <li>Used feature importance to identify the strongest churn drivers</li>
+          <li>Visualised customer status, churn reasons and predicted at-risk customers in an interactive Power BI dashboard</li>
+        </ul>
 
         <h4 class="modal-subhead">Result</h4>
-        <p>[UPDATE: your real result/insight — e.g. number of personas identified, which segment drove the most revenue, or recommended retention action.]</p>
+        <ul class="modal-list">
+          <li>Identified a 27% churn rate across the customer base (1,732 of 6,418 customers)</li>
+          <li>Competitor-related factors — better devices and better offers — were the leading cause of churn at 44% of cases</li>
+          <li>Pointed to a clear retention lever: competitive device and offer bundling for at-risk customers</li>
+        </ul>
 
-        <a href="#" target="_blank" class="modal-github-button">View Repository on GitHub → [UPDATE: add link]</a>
+        <a href="https://github.com/malshthunga/Customer-Churn-Segmentation" target="_blank" class="modal-github-button">View Repository on GitHub →</a>
       </div>
     </div>
   </div>
@@ -323,7 +344,7 @@
       <button class="modal-close" aria-label="Close">&times;</button>
 
       <div class="modal-image-placeholder" data-project-image="4">
-        <span>Add image here — e.g. Excel dashboard screenshot</span>
+        <img src="assets/sales-insight-dashboard.jpg" alt="Sales insights Excel dashboard" class="modal-image">
       </div>
       <div class="modal-body">
         <h2 id="modal-4-title">Sales Insights Dashboard</h2>
@@ -332,16 +353,27 @@
             <span class="tag">PivotTables</span>
             <span class="tag">XLOOKUP</span>
         </div>
+
         <h4 class="modal-subhead">Problem</h4>
-        <p>[UPDATE: e.g. summarise sales performance, product trends, and regional insights from a raw sales dataset for stakeholder reporting.]</p>
+        <p>Grad Careers needed a clear view of sales performance, profit margin and regional trends across its service lines to guide pricing and promotion decisions.</p>
 
         <h4 class="modal-subhead">Approach</h4>
-        <p>[UPDATE: e.g. cleaned and standardised the dataset using IFERROR, XLOOKUP and TRIM, calculated metrics such as Profit = Revenue − Cost, then built PivotTables, charts, and an interactive dashboard with slicers and KPIs.]</p>
+        <ul class="modal-list">
+          <li>Cleaned and standardised the sales dataset in Excel</li>
+          <li>Calculated profit and margin per service</li>
+          <li>Built PivotTables and an interactive dashboard with slicers</li>
+          <li>Broke performance down by service, sales agent, region and month</li>
+        </ul>
 
         <h4 class="modal-subhead">Result</h4>
-        <p>[UPDATE: your real result/insight — e.g. top-performing region or product, or a specific trend the dashboard revealed.]</p>
+        <ul class="modal-list">
+          <li>Mentoring Program generated the most revenue — $224,638 across 265 orders (~25% of total)</li>
+          <li>Interview Prep delivered the strongest profit margin at 90%, despite lower revenue — the highest-return service to promote</li>
+          <li>Surfaced a recurring March–April revenue dip</li>
+          <li>Flagged a 10.3% cancellation rate worth addressing</li>
+        </ul>
 
-        <a href="#" target="_blank" class="modal-github-button">View Repository on GitHub → [UPDATE: add link]</a>
+        <a href="https://github.com/malshthunga/Sales-Insights-Dashboard" target="_blank" class="modal-github-button">View Repository on GitHub →</a>
       </div>
     </div>
   </div>
