@@ -525,7 +525,22 @@ body.modal-locked {
   .modal-body {
     padding: 1.5rem 1.5rem 2rem;
   }
-}
+
+  .modal-list {
+    margin: 0 0 16px; 
+    padding-left: 20px; 
+
+  }
+
+  .modal-list li {
+    margin-bottom: 8px; 
+    line-height: 1.5; 
+
+  }
+
+  .modal-list li:last-child {
+    margin-bottom: 0;
+  }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {

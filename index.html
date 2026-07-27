@@ -59,7 +59,7 @@
         <button class="project-card" data-modal="modal-2" aria-haspopup="dialog">
             <div class="project-card-inner">
                 <span class="project-metric">Retention strategy</span>
-                <h3>Customer Churn &amp; Segmentation</h3>
+                <h3>Customer Segmentation</h3>
                 <p>Built a segmentation model to identify at-risk customers and informed retention strategy.</p>
                 <div class="tag-row">
                     <span class="tag">Python</span>
@@ -74,7 +74,7 @@
         <button class="project-card" data-modal="modal-3" aria-haspopup="dialog">
             <div class="project-card-inner">
                 <span class="project-metric">[UPDATE: result]</span>
-                <h3>Customer Segmentation &amp; Recommendations</h3>
+                <h3>Churn Analysis</h3>
                 <p>Data-driven Power BI dashboard highlighting key customer personas and retention strategies.</p>
                 <div class="tag-row">
                     <span class="tag">Power BI</span>
@@ -224,30 +224,41 @@
         </div>
 
         <h4 class="modal-subhead">Problem</h4>
-        <p>Update this with the real problem — e.g. what neural state needed to be predicted, and why a closed-loop controller was needed.</p>
+        <p>Partnered with SAHMRI (South Australian Health and Medical Research Institute) through the University of Adelaide to prototype closed-loop brain stimulation — a system that adjusts stimulation in real time based on EEG activity, targeting the dorsolateral prefrontal cortex (DLPFC), a region tied to attention and working memory.</p>
 
         <h4 class="modal-subhead">Approach</h4>
-        <p>Update this with your real method — e.g. how EEG data was preprocessed, which model architecture, how the feedback loop was structured.</p>
+        <ul class="modal-list">
+          <li>Built a modular Python pipeline across 13 participant EEG datasets (GX tES EEG Physio-Behaviour Dataset)</li>
+          <li>Extracted frequency-domain features (theta, alpha, beta band power) across ~619 features per segment</li>
+          <li>Compressed features with PCA — chosen over Factor Analysis for clearer, more stable state clusters</li>
+          <li>Trained and compared two architectures (MLP vs. LSTM) to predict neural-state transitions (Δz)</li>
+          <li>Fed the trained MLP into two adaptive controllers — a PI controller and a reinforcement-learning controller</li>
+        </ul>
 
         <h4 class="modal-subhead">Result</h4>
-        <p>Achieved 81% accuracy predicting neural state changes from EEG data. Add any further detail on validation or real-world testing here.</p>
-
-        <a href="https://github.com/yourusername/eeg-stimulation-controller" target="_blank" class="modal-github-button">View Repository on GitHub →</a>
+        <ul class="modal-list">
+          <li>MLP predicted neural-state transitions with R² of 0.814 and RMSE of 0.104 — beating typical EEG modelling baselines (R² ≈ 0.3–0.7)</li>
+          <li>Outperformed the LSTM, confirming static nonlinear mappings were enough for this dataset</li>
+          <li>In simulation, stimulation intensity stabilised between 0.58–0.62 mA</li>
+          <li>Mean error dropped ~50% within 100 cycles</li>
+        </ul>
+        
+        <a href="https://github.com/malshthunga/Closed-loop-Brain-Stimulation-Controller-Using-Machine-Learning-Sprint-2" target="_blank" class="modal-github-button">View Repository on GitHub →</a>
       </div>
     </div>
   </div>
 
-    <!-- ===== Modal 2: Customer Churn & Segmentation ===== -->
+    <!-- ===== Modal 2: Customer Segmentation ===== -->
   <div class="modal-overlay" id="modal-2" role="dialog" aria-modal="true" aria-labelledby="modal-2-title">
     <div class="modal-card">
       <button class="modal-close" aria-label="Close">&times;</button>
 
       <div class="modal-image-placeholder" data-project-image="2">
         <div class="slideshow">
-          <img src="assets/customer-segmentation-dashboard.png" alt="customer-seg-1" class="modal-image">
-          <img src="assets/business-overview-dashboard.png" alt="customer-seg-2" class="modal-image">
+          <img src="assets/customer-segmentation-dashboard.png" alt="customer-seg-1" class="modal-image slide active">
+          <img src="assets/business-overview-dashboard.png" alt="customer-seg-2" class="modal-image slide">
           <button class="slide-arrow slide-prev" aria-label="Previous image">&#8249;</button>
-          <button class="slide-arrow slide-next" aria-label="Next image">&#8540;</button>
+          <button class="slide-arrow slide-next" aria-label="Next image">&#8250;</button>
           <div class="slide-dots"></div>
         </div>
       </div>
@@ -271,16 +282,22 @@
       </div>
     </div>
   </div>
-  <!-- ===== Modal 3: Customer Segmentation & Recommendations (Power BI) ===== -->
+  <!-- ===== Modal 3: Churn ===== -->
   <div class="modal-overlay" id="modal-3" role="dialog" aria-modal="true" aria-labelledby="modal-3-title">
     <div class="modal-card">
       <button class="modal-close" aria-label="Close">&times;</button>
 
       <div class="modal-image-placeholder" data-project-image="3">
-        <span>Add image here — e.g. Power BI dashboard screenshot</span>
-      </div>
+        <div class="slideshow">
+          <img src="assets/churn-analysis-dashboard.png" alt="churn-ana-1" class="modal-image slide active">
+          <img src="assets/churn-reason-dashboard.png" alt="churn-ana-2" class="modal-image slide">
+          <button class="slide-arrow slide-prev" aria-label="Previous image">&#8249;</button>
+          <button class="slide-arrow slide-next" aria-label="Next image">&#8250;</button>
+          <div class="slide-dots"></div>
+        </div>
+      </div>        
       <div class="modal-body">
-        <h2 id="modal-3-title">Customer Segmentation &amp; Recommendations</h2>
+        <h2 id="modal-3-title">Churn</h2>
         <div class="tag-row">
             <span class="tag">Power BI</span>
             <span class="tag">DAX</span>
@@ -532,17 +549,19 @@
       const slides = slideshow.querySelectorAll('.slide');
       if (slides.length <= 1) return; //no arros or dots 
 
-      const dotsContainer = slideshow.querySelectorAll('.slide-dots');
+      const dotsContainer = slideshow.querySelector('.slide-dots');
       let current = 0;
 
       slides.forEach((_,i) => {
         const dot = document.createElement('button');
+        dot.classList.add('slide-dot');
         if (i === 0) dot.classList.add('active');
         dot.addEventListener('click', () => goTo(i));
         dotsContainer.appendChild(dot);
       });
 
       const dots = slideshow.querySelectorAll('.slide-dot');
+
       function goTo(index) {
         slides[current].classList.remove('active');
         dots[current].classList.remove('active');
@@ -551,7 +570,7 @@
         dots[current].classList.add('active');
       }
 
-      slideshow.querySelector('.slide-prev').addEventListener('click', () => goTo(current -1));
+      slideshow.querySelector('.slide-prev').addEventListener('click', () => goTo(current - 1));
       slideshow.querySelector('.slide-next').addEventListener('click', () => goTo(current + 1));
     })
   </script>
