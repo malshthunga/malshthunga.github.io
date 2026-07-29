@@ -27,7 +27,7 @@ export default function Home() {
         <Hero3D />
         <div className="absolute inset-0 -z-[5] bg-gradient-to-r from-obsidian via-obsidian/70 to-transparent" />
 
-        <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-[1.3fr_0.7fr]">
+        <div className="relative mx-auto w-full max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -40,44 +40,12 @@ export default function Home() {
               </span>
             </div>
 
-            <p className="font-mono text-xs uppercase tracking-widest text-pulse">
-              IT GRADUATE
-            </p>
-            <h1 className="mt-4 font-display text-display-xl font-medium text-ink">
-              NETHMI
-              <br />
-              MALSHA
+            <h1 className="font-display text-display-xl font-medium text-ink whitespace-nowrap">
+              NETHMI MALSHA
             </h1>
-
-            <p className="mt-6 max-w-lg text-sm leading-relaxed text-muted sm:text-base">
-Adelaide-based IT graduate with a genuine love for making messy things make sense, whether that's data, code, or a broken laptop. I work across data analytics, IT support, and software engineering. Open to roles in any of those
+            <p className="mt-3 font-mono text-xs uppercase tracking-widest text-pulse">
+              IT Graduate
             </p>
-
-            <div className="mt-5 flex flex-wrap gap-2">
-              {["Python", "SQL", "Power BI", "Excel", "scikit-learn", "Machine Learning"].map((skill) => (
-                <span key={skill} className="tag-pill">
-                  {skill}
-                </span>
-              ))}
-            </div>
-
-            <div className="mt-10 flex items-center gap-4 rounded-2xl border border-line bg-surface/60 p-4 backdrop-blur-sm sm:w-fit">
-              <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-surface2">
-                <SafeImage
-                  src="/assets/university-logo.jpg"
-                  alt="Adelaide University"
-                  fill
-                  className="object-cover"
-                  fallbackLabel="Logo"
-                />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-ink">Bachelor of Information Technology</p>
-                <p className="text-xs text-muted">
-                  Artificial Intelligence &amp; Machine Learning · Adelaide University
-                </p>
-              </div>
-            </div>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <a
@@ -85,7 +53,7 @@ Adelaide-based IT graduate with a genuine love for making messy things make sens
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-signal px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-signal/80"
-               >
+              >
                 Resume
               </a>
               <a
@@ -106,26 +74,84 @@ Adelaide-based IT graduate with a genuine love for making messy things make sens
               </a>
             </div>
           </motion.div>
-
-          <motion.div
-            className="relative mx-auto aspect-[3/4] w-full max-w-xs overflow-hidden rounded-3xl border border-line shadow-[0_0_60px_-15px_rgba(110,90,240,0.5)]"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
-          >
-            <SafeImage
-              src="/assets/profile.JPG"
-              alt="Nethmi Malsha"
-              fill
-              className="object-cover"
-              fallbackLabel="Add photo"
-            />
-          </motion.div>
         </div>
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted">
           <span className="font-mono text-[10px] uppercase tracking-widest">Scroll</span>
           <div className="h-8 w-px bg-line" />
         </div>
+      </section>
+
+      {/* ── ABOUT ME ─────────────────────────────────────────── */}
+      <section id="about" className="mx-auto max-w-6xl px-6 py-24">
+        <motion.div
+          className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[0.7fr_1.3fr]"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          {/* Photo + location */}
+          <div className="mx-auto w-full max-w-xs lg:mx-0">
+            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-3xl border border-line shadow-[0_0_60px_-15px_rgba(110,90,240,0.5)]">
+              <SafeImage
+                src="/assets/profile.JPG"
+                alt="Nethmi Malsha"
+                fill
+                className="object-cover"
+                fallbackLabel="Add photo"
+              />
+            </div>
+            <div className="mt-4 flex items-center gap-2 text-muted">
+              <span className="font-mono text-xs uppercase tracking-widest">
+                Adelaide, South Australia
+              </span>
+            </div>
+          </div>
+
+          {/* Bio + qualifications */}
+          <div>
+            <span className="font-mono text-xs uppercase tracking-widest text-pulse">
+              About
+            </span>
+            <h2 className="mt-3 font-display text-display-lg font-medium text-ink">
+              About Me
+            </h2>
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted sm:text-base">
+              Adelaide-based IT graduate with a genuine love for making messy things make sense, whether that's data, code, or a broken laptop. I work across data analytics, IT support, and software engineering, and I'm open to roles in any of those.
+            </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {["Python", "SQL", "Power BI", "Excel", "scikit-learn", "Machine Learning"].map((skill) => (
+                <span key={skill} className="tag-pill">
+                  {skill}
+                </span>
+              ))}
+            </div>
+            <div className="mt-8 flex items-center gap-4 rounded-2xl border border-line bg-surface/60 p-4 backdrop-blur-sm sm:w-fit">
+              <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-surface2">
+                <SafeImage
+                  src="/assets/university-logo.jpg"
+                  alt="Adelaide University"
+                  fill
+                  className="object-cover"
+                  fallbackLabel="Logo"
+                />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-ink">Bachelor of Information Technology</p>
+                <p className="text-xs text-muted">
+                  Artificial Intelligence &amp; Machine Learning · Adelaide University
+                </p>
+              </div>
+            </div>
+
+            <a
+              href="#certifications"
+              className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-signal hover:underline"
+            >
+              View certifications ↓
+            </a>
+          </div>
+        </motion.div>
       </section>
 
       {/* ── DATA ANALYTICS ──────────────────────────────────── */}
@@ -175,8 +201,10 @@ Adelaide-based IT graduate with a genuine love for making messy things make sens
           </motion.div>
         ))}
       </Section>
-      
-      <CertificationSection/>
+
+      <div id="certifications">
+        <CertificationSection/>
+      </div>
 
       <footer className="border-t border-line px-6 py-10 text-center">
         <p className="font-mono text-xs uppercase tracking-widest text-muted">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -9,8 +9,10 @@ const CONNECT_DISTANCE = 1.6;
 const RADIUS = 3.4;
 const PULSE_COUNT = 50;
 
-/** Generates points roughly distributed across a lopsided sphere, so the
- *  mesh reads as organic (brain-like) rather than a perfect geometric form. */
+const REPEL_RADIUS = 1.4;
+const REPEL_STRENGTH = 0.55;
+const EASE_BACK = 0.06;
+
 function useNodePositions() {
   return useMemo(() => {
     const positions: THREE.Vector3[] = [];
@@ -27,8 +29,6 @@ function useNodePositions() {
   }, []);
 }
 
-/** Returns actual edge pairs (not just a flat position array) so pulses
- *  can travel between two known endpoints. */
 function useEdges(positions: THREE.Vector3[]) {
   return useMemo(() => {
     const edges: [THREE.Vector3, THREE.Vector3][] = [];
@@ -43,8 +43,6 @@ function useEdges(positions: THREE.Vector3[]) {
   }, [positions]);
 }
 
-/** Soft radial-gradient sprite, generated on a canvas — this is what turns
- *  a flat dot into a glowing point when combined with additive blending. */
 function useGlowTexture(color: string) {
   return useMemo(() => {
     const size = 128;
@@ -62,10 +60,25 @@ function useGlowTexture(color: string) {
   }, [color]);
 }
 
+// tracks the cursor at the WINDOW level, bypassing canvas hit-testing entirely
+function useWindowPointer() {
+  const pointer = useRef({ x: 0, y: 0 });
+  useEffect(() => {
+    const handleMove = (e: PointerEvent) => {
+      pointer.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      pointer.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener("pointermove", handleMove);
+    return () => window.removeEventListener("pointermove", handleMove);
+  }, []);
+  return pointer;
+}
+
 function NeuralMesh() {
   const group = useRef<THREE.Group>(null);
   const positions = useNodePositions();
   const edges = useEdges(positions);
+  const basePositions = useMemo(() => positions.map((p) => p.clone()), [positions]);
 
   const glowTexture = useGlowTexture("rgba(0,229,199,0.85)");
   const pulseTexture = useGlowTexture("rgba(255,255,255,0.9)");
@@ -90,7 +103,6 @@ function NeuralMesh() {
     return geo;
   }, [edges]);
 
-  // pulses: bright points that travel along a random edge, then reassign
   const pulses = useMemo(
     () =>
       Array.from({ length: PULSE_COUNT }, () => ({
@@ -107,18 +119,50 @@ function NeuralMesh() {
     return geo;
   }, [pulses]);
 
-  const { mouse } = useThree();
+  const { viewport } = useThree();
+  const pointer = useWindowPointer();
 
   useFrame((state, delta) => {
     if (!group.current) return;
     const t = state.clock.getElapsedTime();
     group.current.rotation.y = t * 0.08;
-    // snappier lerp (0.05 vs original 0.03) — reads more "responsive HUD",
-    // less "slow ambient drift"
-    group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, mouse.y * 0.18, 0.05);
-    group.current.rotation.z = THREE.MathUtils.lerp(group.current.rotation.z, -mouse.x * 0.1, 0.05);
+    group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, pointer.current.y * 0.18, 0.05);
+    group.current.rotation.z = THREE.MathUtils.lerp(group.current.rotation.z, -pointer.current.x * 0.1, 0.05);
 
-    const posAttr = pulseGeometry.attributes.position as THREE.BufferAttribute;
+    const mouseX = (pointer.current.x * viewport.width) / 2;
+    const mouseY = (pointer.current.y * viewport.height) / 2;
+
+    const posAttr = pointsGeometry.attributes.position as THREE.BufferAttribute;
+
+    for (let i = 0; i < positions.length; i++) {
+      const node = positions[i];
+      const base = basePositions[i];
+
+      const dx = node.x - mouseX;
+      const dy = node.y - mouseY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < REPEL_RADIUS && dist > 0.0001) {
+        const force = (1 - dist / REPEL_RADIUS) * REPEL_STRENGTH;
+        node.x += (dx / dist) * force * 0.15;
+        node.y += (dy / dist) * force * 0.15;
+      } else {
+        node.x += (base.x - node.x) * EASE_BACK;
+        node.y += (base.y - node.y) * EASE_BACK;
+      }
+
+      posAttr.setXYZ(i, node.x, node.y, node.z);
+    }
+    posAttr.needsUpdate = true;
+
+    const lineAttr = lineGeometry.attributes.position as THREE.BufferAttribute;
+    edges.forEach(([a, b], i) => {
+      lineAttr.setXYZ(i * 2, a.x, a.y, a.z);
+      lineAttr.setXYZ(i * 2 + 1, b.x, b.y, b.z);
+    });
+    lineAttr.needsUpdate = true;
+
+    const pulseAttr = pulseGeometry.attributes.position as THREE.BufferAttribute;
     pulses.forEach((pulse, i) => {
       pulse.t += delta * pulse.speed;
       if (pulse.t > 1) {
@@ -126,20 +170,20 @@ function NeuralMesh() {
         pulse.edge = edges[Math.floor(Math.random() * edges.length)];
       }
       const [a, b] = pulse.edge;
-      posAttr.setXYZ(
+      pulseAttr.setXYZ(
         i,
         THREE.MathUtils.lerp(a.x, b.x, pulse.t),
         THREE.MathUtils.lerp(a.y, b.y, pulse.t),
         THREE.MathUtils.lerp(a.z, b.z, pulse.t)
       );
     });
-    posAttr.needsUpdate = true;
+    pulseAttr.needsUpdate = true;
   });
 
   return (
     <group ref={group}>
       <lineSegments geometry={lineGeometry}>
-        <lineBasicMaterial color="#5b6bff" transparent opacity={0.22} />
+        <lineBasicMaterial color="#2dd4bf" transparent opacity={0.28} />
       </lineSegments>
 
       <points geometry={pointsGeometry}>
